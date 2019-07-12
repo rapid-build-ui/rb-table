@@ -1,7 +1,7 @@
 /***********
  * RB-TABLE
  ***********/
-import { RbBase, props, html } from '../../rb-base/scripts/rb-base.js';
+import { RbBase, props, html } from '../../base/scripts/base.js';
 import template                from '../views/rb-table.html';
 
 export class RbTable extends RbBase() {
