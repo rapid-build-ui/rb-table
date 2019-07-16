@@ -9,7 +9,7 @@ export class RbTable extends RbBase() {
 	 ************/
 	constructor() {
 		super();
-		this.version = '0.0.2';
+		this.version = '0.0.3';
 	}
 
 	/* Properties
