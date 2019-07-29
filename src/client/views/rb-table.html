@@ -1,4 +1,6 @@
-<div class="container">
+<div
+	style="${View.styleMap(state.gridTemplateColumns)}"
+	class="container">
 	${Array.isArray(this.rb.elms.columns) && this.rb.elms.columns.length
 		? html`
 			${this.rb.elms.columns.map((column, i) => html`
@@ -10,12 +12,12 @@
 					${column.getAttribute('caption')}
 					${column.getAttribute('sort') != undefined ? html`
 						<rb-icon
-							kind = "${this.state._orderDirection == 'asc'
-									&& [column.getAttribute('key')].includes(this.state._orderKey)
+							kind = "${this.state.orderDirection == 'asc'
+									&& [column.getAttribute('key')].includes(this.state.orderKey)
 									? 'caret-down' :
 										(
-											this.state._orderDirection == 'desc'
-											&& [column.getAttribute('key')].includes(this.state._orderKey) ?
+											this.state.orderDirection == 'desc'
+											&& [column.getAttribute('key')].includes(this.state.orderKey) ?
 											'caret-up' : 'caret-down'
 										)
 									}"

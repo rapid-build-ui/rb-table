@@ -4,6 +4,7 @@
 import { RbBase, props, html } from '../../base/scripts/base.js';
 import template                from '../views/rb-table.html';
 import Type                    from '../../base/scripts/public/services/type.js';
+import View                    from '../../base/scripts/public/view/directives.js';
 
 export class RbTable extends RbBase() {
 	/* Lifecycle
@@ -13,8 +14,10 @@ export class RbTable extends RbBase() {
 		this.version = '0.0.3';
 		this.state = {
 			...super.state,
-			_orderDirection: 'asc',
-			_orderKey: ''
+			orderDirection: 'asc',
+			orderKey: '',
+			gridTemplateColumns: {}
+
 		}
 	}
 
@@ -22,7 +25,8 @@ export class RbTable extends RbBase() {
 		super.viewReady && super.viewReady();
 		Object.assign(this.rb.elms, {
 			columns: null,
-			slot:  this.shadowRoot.querySelector('slot')
+			slot:  this.shadowRoot.querySelector('slot'),
+			root: this.shadowRoot.querySelector('.container')
 		});
 		this._attachEvents();
 		this.triggerUpdate();
@@ -43,6 +47,8 @@ export class RbTable extends RbBase() {
 			.assignedNodes({flatten:true})
 			.filter(n => n.nodeType === Node.ELEMENT_NODE)
 			.filter(n => n.tagName.toLowerCase() === 'column');
+
+		this._setGridStyle();
 	}
 
 	_onclick(key, column, evt) { // :void
@@ -60,8 +66,13 @@ export class RbTable extends RbBase() {
 	}
 
 	_setSortOrderAndDirection(key) {
-		this.state._orderDirection = this.state._orderKey == key && this.state._orderDirection == 'asc' ? 'desc' : 'asc';
-		this.state._orderKey = key;
+		this.state.orderDirection = this.state.orderKey == key && this.state.orderDirection == 'asc' ? 'desc' : 'asc';
+		this.state.orderKey = key;
+	}
+
+	_setGridStyle() {
+		const arrColumnWidths = Array(this.rb.elms.columns.length).fill(100 / this.rb.elms.columns.length)
+		this.state.gridTemplateColumns['grid-template-columns'] = arrColumnWidths.join('% ') + '%'
 	}
 
 	/* Properties
@@ -99,15 +110,15 @@ export class RbTable extends RbBase() {
 		this.data = this.data.sort((a, b) => {
 			// console.log(this.state);
 			// return a[key] - b[key]
-			return this.state._orderDirection == 'asc' ? a[key] - b[key] : b[key] - a[key];
+			return this.state.orderDirection == 'asc' ? a[key] - b[key] : b[key] - a[key];
 		});
 	}
 
 	// sort by name
 	_sortByName(key) {
 		this.data = this.data.sort((a, b) =>{
-			var nameA = this.state._orderDirection == 'asc' ? a[key].toUpperCase() : b[key].toUpperCase(); // ignore upper and lowercase
-			var nameB = this.state._orderDirection == 'asc' ? b[key].toUpperCase() : a[key].toUpperCase();  // ignore upper and lowercase
+			var nameA = this.state.orderDirection == 'asc' ? a[key].toUpperCase() : b[key].toUpperCase(); // ignore upper and lowercase
+			var nameB = this.state.orderDirection == 'asc' ? b[key].toUpperCase() : a[key].toUpperCase();  // ignore upper and lowercase
 			if (nameA < nameB) {
 				return -1;
 			}
