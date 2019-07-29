@@ -1,6 +1,65 @@
 /********
  * TABLE
  ********/
-.table {
+.container {
+	display: grid;
+	grid-template-columns: 33% 33% 33%;
+	color: #444;
+
+	.row {
+		position: relative;
+		padding: 10px;
+		text-align: left;
+		vertical-align: top;
+		font-size: remy(13.5);
+		color: #5f6e7e;
+	}
+
+	&:first-child::before,
+	&:last-child::after {
+		top: -1px;
+		border-radius: 0;
+		border-top: 1px dotted mapGet($palette, lightGray);
+		border-bottom: 1px dotted mapGet($palette, lightGray);
+	}
+
+	rb-icon {
+		position: relative;
+		top: 3px;
+	}
+}
+
+caption {
+	color: #004085;
+	background-color: #cce5ff;
+	padding: 10px;
+	font-size: remy(13);
+	text-transform: uppercase;
+	font-weight: 500;
+	letter-spacing: 0.3px;
+	white-space: nowrap;
+
+	&.first {
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+	}
+	&.last {
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
+	}
+
+	&:not(.last) {
+		border-right: 1px solid #037bab;
+
+	}
+
+	&.sortable {
+		cursor: pointer;
+	}
+
+	&.active {
+		background-color: darken(#cce5ff, 15%);
+	}
+
 
 }

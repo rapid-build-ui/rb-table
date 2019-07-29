@@ -1,7 +1,44 @@
-<div class="
-	table
-	${props.kind}">
-	<slot></slot>
+<div class="container">
+	${Array.isArray(this.rb.elms.columns) && this.rb.elms.columns.length
+		? html`
+			${this.rb.elms.columns.map((column, i) => html`
+				<caption class="${i==0 ? 'first' : ''}
+								${i==this.rb.elms.columns.length-1 ? 'last' : ''}
+								${column.getAttribute('sort') != undefined ? 'sortable' : ''}"
+
+						@click="${this._onclick.bind(this, column.getAttribute('key'), column)}" >
+					${column.getAttribute('caption')}
+					${column.getAttribute('sort') != undefined ? html`
+						<rb-icon
+							kind = "${this.state._orderDirection == 'asc'
+									&& [column.getAttribute('key')].includes(this.state._orderKey)
+									? 'caret-down' :
+										(
+											this.state._orderDirection == 'desc'
+											&& [column.getAttribute('key')].includes(this.state._orderKey) ?
+											'caret-up' : 'caret-down'
+										)
+									}"
+							source="solid"
+							size="1.2">
+						</rb-icon>
+					`: null }
+
+				</caption>
+			`)}
+			${Array.isArray(props.data) && props.data.map((item, i) => html`
+				${this.rb.elms.columns.map((column, j) => html`
+					<div class="row
+								${j==0 ? 'first' : ''}
+								${j==this.rb.elms.columns.length-1 ? 'last' : ''}">
+						${item[column.getAttribute('key')]}
+					</div>
+				`)}
+			`)}
+		`: ''
+
+	}
 </div>
+<slot></slot>
 
 <link rel="stylesheet" href="../styles/rb-table.css">
