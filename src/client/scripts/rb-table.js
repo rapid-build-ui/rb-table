@@ -59,7 +59,7 @@ export class RbTable extends RbBase() {
 
 	_setCaptionActiveState(key, evt) {
 		this.captions = !this.captions ? this.shadowRoot.querySelectorAll('caption') : this.captions
-		this.captions.forEach((item) =>{
+		this.captions.forEach((item) => {
 			item.classList.remove("active")
 		})
 		evt.currentTarget.classList.add("active");
@@ -71,8 +71,33 @@ export class RbTable extends RbBase() {
 	}
 
 	_setGridStyle() {
-		const arrColumnWidths = Array(this.rb.elms.columns.length).fill(100 / this.rb.elms.columns.length)
-		this.state.gridTemplateColumns['grid-template-columns'] = arrColumnWidths.join('% ') + '%'
+		this.state.gridTemplateColumns['grid-template-columns'] = this._buildColumnWidth()
+	}
+
+	_buildColumnWidth() {
+		const arrColumnWidths = [];
+		this.rb.elms.columns.forEach((item) => {
+			arrColumnWidths.push(item.getAttribute('width'))
+		})
+
+		let columnWidths = ''
+		arrColumnWidths.forEach((width) => {
+			switch(true) {
+				case !width:
+					columnWidths += '1fr ';
+					break;
+				case width.includes('%'):
+					columnWidths += Number(width.replace('%',''))/10 + 'fr ';
+					break;
+				case width.includes('px'):
+					columnWidths += width + ' '
+					break;
+				default:
+					columnWidths += width + ' ';
+					break
+			}
+		})
+		return columnWidths;
 	}
 
 	/* Properties
@@ -108,8 +133,7 @@ export class RbTable extends RbBase() {
 
 	_sortByValue(key) {
 		this.data = this.data.sort((a, b) => {
-			// console.log(this.state);
-			// return a[key] - b[key]
+
 			return this.state.orderDirection == 'asc' ? a[key] - b[key] : b[key] - a[key];
 		});
 	}

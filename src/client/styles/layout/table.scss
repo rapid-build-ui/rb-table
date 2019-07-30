@@ -4,6 +4,7 @@
 .container {
 	display: grid;
 	color: #444;
+	overflow-x: auto;
 
 	.row {
 		position: relative;
@@ -59,6 +60,4 @@ caption {
 	&.active {
 		background-color: darken(#cce5ff, 15%);
 	}
-
-
 }
