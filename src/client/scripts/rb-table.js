@@ -52,6 +52,11 @@ export class RbTable extends RbBase() {
 	}
 
 	_onclick(key, column, evt) { // :void
+		this._sort(key, column, evt)
+	}
+
+	_sort(key, column,evt) {
+		if (column.getAttribute('sort') == undefined) return;
 		this._setCaptionActiveState(key, evt);
 		this._setSortOrderAndDirection(key);
 		this._sortOnClient(key)
