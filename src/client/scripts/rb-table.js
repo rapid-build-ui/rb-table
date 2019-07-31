@@ -116,8 +116,14 @@ export class RbTable extends RbBase() {
 					}
 					return val;
 				}
+			}),
+			columnAlign: Object.assign({}, props.string, {
+				default: 'left'
+			}),
+			captionAlign: Object.assign({}, props.string, {
+				default: 'left'
 			})
-		};
+		}
 	}
 
 

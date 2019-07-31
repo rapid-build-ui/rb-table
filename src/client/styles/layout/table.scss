@@ -9,10 +9,14 @@
 	.row {
 		position: relative;
 		padding: 10px;
-		text-align: left;
 		vertical-align: top;
 		font-size: remy(13.5);
 		color: #5f6e7e;
+
+		//alignment
+		&.left {text-align: left}
+		&.center {text-align: center}
+		&.right {text-align: right}
 	}
 
 	&:first-child::before,
@@ -60,4 +64,9 @@ caption {
 	&.active {
 		background-color: darken(#cce5ff, 15%);
 	}
+
+	//alignment
+	&.left {text-align: left}
+	&.center {text-align: center}
+	&.right {text-align: right}
 }

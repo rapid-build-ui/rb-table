@@ -6,8 +6,9 @@
 			${this.rb.elms.columns.map((column, i) => html`
 				<caption class="${i==0 ? 'first' : ''}
 								${i==this.rb.elms.columns.length-1 ? 'last' : ''}
-								${column.getAttribute('sort') != undefined ? 'sortable' : ''}"
-
+								${column.getAttribute('sort') != undefined ? 'sortable' : ''}
+								${props.captionAlign}
+								"
 						@click="${this._onclick.bind(this, column.getAttribute('key'), column)}" >
 					${column.getAttribute('caption')}
 					${column.getAttribute('sort') != undefined ? html`
@@ -32,7 +33,8 @@
 				${this.rb.elms.columns.map((column, j) => html`
 					<div class="row
 								${j==0 ? 'first' : ''}
-								${j==this.rb.elms.columns.length-1 ? 'last' : ''}">
+								${j==this.rb.elms.columns.length-1 ? 'last' : ''}
+								${props.columnAlign}">
 						${item[column.getAttribute('key')]}
 					</div>
 				`)}
